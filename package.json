@@ -38,9 +38,9 @@
   "author": "alexloof",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Alexloof/simple-config/issues"
+    "url": "https://github.com/Alexloof/centig/issues"
   },
-  "homepage": "https://github.com/Alexloof/simple-config#readme",
+  "homepage": "https://github.com/Alexloof/centig#readme",
   "devDependencies": {
     "@types/jest": "^24.0.20",
     "jest": "^24.9.0",
