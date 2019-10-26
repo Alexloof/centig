@@ -2,8 +2,8 @@
   "name": "centig",
   "version": "1.0.6",
   "description": "Configuration library for your node.js project",
-  "main": "lib/config.js",
-  "types": "lib/config.d.ts",
+  "main": "lib/centig.js",
+  "types": "lib/centig.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc",
@@ -43,6 +43,7 @@
   "homepage": "https://github.com/Alexloof/centig#readme",
   "devDependencies": {
     "@types/jest": "^24.0.20",
+    "@types/node": "^12.11.7",
     "jest": "^24.9.0",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
