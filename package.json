@@ -1,6 +1,6 @@
 {
   "name": "centig",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Configuration library for your node.js project",
   "main": "lib/config.js",
   "types": "lib/config.d.ts",
