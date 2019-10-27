@@ -5,16 +5,17 @@
   "main": "lib/centig.js",
   "types": "lib/centig.d.ts",
   "scripts": {
-    "test": "jest --config jestconfig.json",
+    "dev": "nodemon --watch src/**/*.ts --ignore src/**/*.test.ts --exec ts-node src/dev.ts",
     "build": "tsc",
-    "build:watch": "tsc --watch",
+    "test": "jest --watch --config jest.config.js",
+    "test:ci": "npm run lint && npm run coverage && npm run build",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "tslint -p tsconfig.json",
-    "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push origin master && git push --tags"
+    "postversion": "git push origin master && git push --tags",
+    "coverage": "jest --config jest.config.js --verbose --coverage",
+    "coverage:upload": "codecov"
   },
   "repository": {
     "type": "git",
@@ -44,9 +45,12 @@
   "devDependencies": {
     "@types/jest": "^24.0.20",
     "@types/node": "^12.11.7",
+    "codecov": "^3.6.1",
     "jest": "^24.9.0",
+    "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
+    "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.4"

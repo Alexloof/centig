@@ -3,8 +3,12 @@ language: node_js
 node_js:
   - '10'
 
-before_script:
+install:
   - npm install
+
+script:
+  - npm run test:ci
+  - codecov
 
 deploy:
   provider: npm

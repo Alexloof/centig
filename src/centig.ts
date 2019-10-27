@@ -61,7 +61,7 @@ const validate = (configs: IConfig) => {
       console.log(confBlock);
       throw Error('Validation error');
     } catch (error) {
-      errors.push({ context: confBlock, error: error.message });
+      errors.push({ error: error.message });
     }
   });
   return errors;
@@ -71,9 +71,7 @@ const centig = (jsonConfig: IConfig) => {
   const errors = validate(jsonConfig);
 
   if (errors.length) {
-    const output = errors
-      .map(errBlock => errBlock.context + errBlock.error)
-      .join('\n');
+    const output = errors.map((errBlock: any) => errBlock.error).join('\n');
 
     throw Error(output);
   }
