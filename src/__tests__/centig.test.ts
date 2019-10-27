@@ -1,4 +1,4 @@
-// import centig from '../centig';
+import centig from '../centig';
 
 test('centig', () => {
   expect(true);

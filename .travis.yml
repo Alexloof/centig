@@ -7,7 +7,7 @@ install:
   - npm install
 
 script:
-  - npm run test:ci
+  - npm run pipeline:ci
   - codecov
 
 deploy:
