@@ -1,7 +1,7 @@
 import centig from './centig';
 
-process.env.port = '5000';
-process.env.test = 'TEST';
+process.env.PORT = '5000';
+process.env.TEST = 'TEST';
 // console.log(process.env.PORT);
 // console.log(process.env.TEST);
 
@@ -15,9 +15,12 @@ const config = centig({
     lastname: {
       type: Number,
       env: 'PORT',
-      process: (value: any) => Number(value),
+      preprocess: (value: any) => Number(value),
     },
     secret: 1122,
+    secretFunction: function() {
+      console.log('secretFunction');
+    },
   },
   // port: {
   //   type: Number,
@@ -26,7 +29,11 @@ const config = centig({
   test: {
     type: String,
     env: 'TEST',
-    validate: (value: any) => value.includes('hej'),
+    validate: (value: any) => {
+      if (!value.includes('TEST')) {
+        throw Error('Value must include TEST');
+      }
+    },
   },
   // test2: {
   //   type: String,
@@ -38,5 +45,9 @@ const config = centig({
 // console.log(config.get('db.host'));
 // console.log(config.get('db').host);
 // console.log(config.get('db.name.first'));
+// console.log(config.get('db.lastname'));
+// console.log(config.get('db').secret);
+// console.log(config.get('db.secretFunction'));
+// console.log(config.get('test'));
 
 // console.log(config.get('port'));
