@@ -19,7 +19,7 @@ const validateConfigs = (configs: IUserConfigs) => {
 
   Object.keys(configs).forEach(configName => {
     const configBlock = configs[configName];
-    // console.log({ configName, configBlock });
+
     try {
       if (isObject(configBlock)) {
         if (isConfigBlock(configBlock)) {
@@ -95,7 +95,7 @@ const typeCheckValue = (
   const formattedTypeName = new type().constructor.name;
 
   if (!supportedTypes.includes(formattedTypeName)) {
-    throw Error(type + ' is not a supported type');
+    throw Error(new type().constructor.name + ' is not a supported type');
   }
 
   if (!isConstructorType(value, type)) {

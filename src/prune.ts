@@ -6,9 +6,14 @@ const prune = (configs: IUserConfigs): IUserConfigs => {
     const configBlock = configs[configName];
     if (isObject(configBlock)) {
       if (isConfigBlock(configBlock)) {
-        accumulator[configName] = configBlock.hasOwnProperty('env')
+        const value = configBlock.hasOwnProperty('env')
           ? process.env[configBlock.env]
           : configBlock.value;
+
+        accumulator[configName] = configBlock.preprocess
+          ? configBlock.preprocess(value)
+          : value;
+
         return accumulator;
       }
 

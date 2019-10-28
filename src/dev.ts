@@ -2,8 +2,7 @@ import centig from './centig';
 
 process.env.PORT = '5000';
 process.env.TEST = 'TEST';
-// console.log(process.env.PORT);
-// console.log(process.env.TEST);
+process.env.Boolmannen = '1';
 
 const config = centig({
   ip: 'ip-test',
@@ -18,14 +17,9 @@ const config = centig({
       preprocess: (value: any) => Number(value),
     },
     secret: 1122,
-    secretFunction: function() {
-      console.log('secretFunction');
-    },
+    secretFunction: () => console.log('secretFunction'),
   },
-  // port: {
-  //   type: Number,
-  //   env: 'PORT',
-  // },
+
   test: {
     type: String,
     env: 'TEST',
@@ -35,19 +29,36 @@ const config = centig({
       }
     },
   },
-  // test2: {
-  //   type: String,
-  //   env: 'TEST',
-  // },
+  testBoolean: {
+    type: Boolean,
+    env: 'Boolmannen',
+    preprocess: (value: any) => Boolean(Number(value)),
+  },
+  valueTest: {
+    type: Number,
+    value: 2323,
+  },
+
+  arrayTest: {
+    type: Array,
+    value: [2323],
+  },
+
+  objectTest: {
+    type: Object,
+    value: { hej: 2323 },
+  },
 });
 
-// console.log(config.get('ip'));
-// console.log(config.get('db.host'));
-// console.log(config.get('db').host);
-// console.log(config.get('db.name.first'));
-// console.log(config.get('db.lastname'));
-// console.log(config.get('db').secret);
-// console.log(config.get('db.secretFunction'));
-// console.log(config.get('test'));
+console.log(config.get('ip'));
+console.log(config.get('db.host'));
+console.log(config.get('db').host);
+console.log(config.get('db.name.first'));
+console.log(config.get('db.lastname'));
+console.log(typeof config.get('db').secret);
+console.log(config.get('db').secretFunction);
+console.log(typeof config.get('test'));
+console.log(typeof config.get('testBoolean'));
+console.log(config.get('valueTest'));
 
 // console.log(config.get('port'));

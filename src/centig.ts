@@ -10,14 +10,6 @@ export interface IConfigBlock {
   optional: boolean;
 }
 
-export const supportedTypes = [
-  'Number',
-  'String',
-  'Boolean',
-  'Object',
-  'Array',
-];
-
 export type ISupportedTypes =
   | StringConstructor
   | NumberConstructor
@@ -29,6 +21,14 @@ export interface IUserConfigs {
   [index: string]: IConfigBlock | any;
 }
 
+export const supportedTypes = [
+  'Number',
+  'String',
+  'Boolean',
+  'Object',
+  'Array',
+];
+
 const centig = (userConfigs: IUserConfigs) => {
   const errors = validateConfigs(userConfigs);
 
@@ -36,33 +36,30 @@ const centig = (userConfigs: IUserConfigs) => {
     throwErrorBeautifully(errors);
   }
 
-  const processedConfigs = prune(userConfigs);
-  console.log({ processedConfigs });
+  const prunedConfig = prune(userConfigs);
 
   return {
     get(path: string) {
-      let config = processedConfigs[path];
+      let config = prunedConfig[path];
 
       if (!config) {
-        const test = path.split('.');
-        let standardConfig = processedConfigs;
+        // try the splittet path get functionality
+        const splittedPath = path.split('.');
 
-        test.forEach(singlePath => {
+        let standardConfig = prunedConfig;
+
+        splittedPath.forEach(singlePath => {
           standardConfig = standardConfig[singlePath];
         });
 
         config = standardConfig;
       }
 
-      if (!config) return null;
-
-      if (typeof config === 'object') {
-        if (config.env) {
-          config = process.env[config.env];
-        }
-      }
-
       return config;
+    },
+
+    toString() {
+      // TODO: Implement
     },
   };
 };
