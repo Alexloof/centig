@@ -23,7 +23,7 @@ const validateConfigs = (configs: IUserConfigs) => {
     try {
       if (isObject(configBlock)) {
         if (isConfigBlock(configBlock)) {
-          if (hasDuplicateConfigValues(configBlock)) {
+          if (hasDuplicateConfigValues(configBlock as IConfigBlock)) {
             throw Error(
               'You can not provide both an env and a value in the config object. Config name: ' +
                 configName,

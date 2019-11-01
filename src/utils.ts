@@ -1,3 +1,5 @@
+import { IValueTypes, ISupportedTypes, IConfigBlock } from './centig';
+
 function isConstructor(f: any) {
   try {
     // tslint:disable-next-line: no-unused-expression
@@ -8,7 +10,7 @@ function isConstructor(f: any) {
   return true;
 }
 
-const isConstructorType = (value: any, type: any) => {
+const isConstructorType = (value: IValueTypes, type: ISupportedTypes) => {
   return (
     Object.prototype.toString.call(new type()) ===
     Object.prototype.toString.call(value)
@@ -26,7 +28,7 @@ const isConfigBlock = (configBlock: any): boolean => {
   );
 };
 
-const hasDuplicateConfigValues = (configBlock: any): boolean => {
+const hasDuplicateConfigValues = (configBlock: IConfigBlock): boolean => {
   return (
     configBlock.hasOwnProperty('env') && configBlock.hasOwnProperty('value')
   );
