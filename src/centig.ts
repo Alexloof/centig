@@ -2,12 +2,12 @@ import validateConfigs from './validateConfigs';
 import prune from './prune';
 
 export interface IConfigBlock {
-  type: ISupportedTypes;
-  env: string;
-  value: any;
-  validate: (value: string) => void;
-  preprocess: (value: any) => any;
-  optional: boolean;
+  type?: ISupportedTypes;
+  env?: string;
+  value?: any;
+  validate?: (value: string) => void;
+  preprocess?: (value: any) => any;
+  optional?: boolean;
 }
 
 export type ISupportedTypes =
@@ -17,20 +17,16 @@ export type ISupportedTypes =
   | ArrayConstructor
   | ObjectConstructor;
 
-interface IObject {
-  [index: string]: any;
-}
-
-export type IDefaultTypes =
+export type IValueTypes =
   | boolean
   | number
   | string
   | any[]
-  | IObject
+  | { [index: string]: any }
   | (() => void);
 
 export interface IUserConfigs {
-  [index: string]: IConfigBlock | IDefaultTypes | IUserConfigs;
+  [index: string]: IConfigBlock | IValueTypes | IUserConfigs;
 }
 
 export const supportedTypes = [

@@ -9,7 +9,7 @@ const prune = <T>(configs: IUserConfigs): T => {
         if (isConfigBlock(configBlock)) {
           const centigConfigBlock = configBlock as IConfigBlock;
           const value = centigConfigBlock.hasOwnProperty('env')
-            ? process.env[centigConfigBlock.env]
+            ? process.env[centigConfigBlock.env as string]
             : centigConfigBlock.value;
 
           accumulator[configName] = centigConfigBlock.preprocess

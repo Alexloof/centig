@@ -48,8 +48,10 @@ const validateConfigs = (configs: IUserConfigs) => {
 const validateConfigBlock = (name: string, configBlock: IConfigBlock) => {
   const { optional, preprocess, validate, type, env, value } = configBlock;
 
-  const valueToValidate = configBlock.hasOwnProperty('env')
-    ? process.env[env]
+  const isAnEnvVarConfigBlock = !!configBlock.hasOwnProperty('env');
+
+  const valueToValidate = isAnEnvVarConfigBlock
+    ? process.env[env as string]
     : value;
 
   if (!valueToValidate) {
@@ -57,14 +59,20 @@ const validateConfigBlock = (name: string, configBlock: IConfigBlock) => {
       // if no value is present and at the same time is optional we stop validation process
       return;
     }
-    throw Error('Missing environment variable. Config name: ' + name);
+    throw Error(
+      `Missing ${
+        isAnEnvVarConfigBlock ? 'environment' : 'value'
+      } variable. Config name: ${name}`,
+    );
   }
 
   let processedValue = null;
 
   if (preprocess) {
     if (!isFunction(preprocess)) {
-      throw Error('The process value most by a function. Config name: ' + name);
+      throw Error(
+        'The preprocess value most by a function. Config name: ' + name,
+      );
     }
     processedValue = preprocess(valueToValidate);
   }
