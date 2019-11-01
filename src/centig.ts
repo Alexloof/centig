@@ -35,6 +35,7 @@ export const supportedTypes = [
   'Boolean',
   'Object',
   'Array',
+  'RegExp',
 ];
 
 const centig = <T>(userConfigs: IUserConfigs) => {
@@ -62,8 +63,8 @@ const centig = <T>(userConfigs: IUserConfigs) => {
       return config as P extends keyof T ? T[P] : any;
     },
 
-    toString() {
-      // TODO: Implement
+    all() {
+      return prunedConfig;
     },
   };
 };
