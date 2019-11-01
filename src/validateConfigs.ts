@@ -29,11 +29,11 @@ const validateConfigs = (configs: IUserConfigs) => {
                 configName,
             );
           }
-          validateConfigBlock(configName, configBlock);
+          validateConfigBlock(configName, configBlock as IConfigBlock);
         }
 
         // if the config object is not a centig specific block - continue with nested validation
-        errors = [...errors, ...validateConfigs(configBlock)];
+        errors = [...errors, ...validateConfigs(configBlock as IUserConfigs)];
       }
 
       // If there is no config block, then there is no need for validation

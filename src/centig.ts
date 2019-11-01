@@ -17,8 +17,20 @@ export type ISupportedTypes =
   | ArrayConstructor
   | ObjectConstructor;
 
+interface IObject {
+  [index: string]: any;
+}
+
+export type IDefaultTypes =
+  | boolean
+  | number
+  | string
+  | any[]
+  | IObject
+  | (() => void);
+
 export interface IUserConfigs {
-  [index: string]: IConfigBlock | any;
+  [index: string]: IConfigBlock | IDefaultTypes | IUserConfigs;
 }
 
 export const supportedTypes = [
@@ -29,24 +41,21 @@ export const supportedTypes = [
   'Array',
 ];
 
-const centig = (userConfigs: IUserConfigs) => {
+const centig = <T>(userConfigs: IUserConfigs) => {
   const errors = validateConfigs(userConfigs);
 
   if (errors.length) {
     throwErrorBeautifully(errors);
   }
-
-  const prunedConfig = prune(userConfigs);
+  const prunedConfig = prune<T>(userConfigs);
 
   return {
-    get(path: string) {
-      let config = prunedConfig[path];
+    get<P extends keyof T | string>(path: P): P extends keyof T ? T[P] : any {
+      let config = prunedConfig[path as keyof T];
 
       if (!config) {
-        // try the splittet path get functionality
-        const splittedPath = path.split('.');
-
-        let standardConfig = prunedConfig;
+        const splittedPath = (path as string).split('.');
+        let standardConfig = prunedConfig as any;
 
         splittedPath.forEach(singlePath => {
           standardConfig = standardConfig[singlePath];
@@ -54,8 +63,7 @@ const centig = (userConfigs: IUserConfigs) => {
 
         config = standardConfig;
       }
-
-      return config;
+      return config as P extends keyof T ? T[P] : any;
     },
 
     toString() {
