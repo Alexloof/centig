@@ -4,21 +4,21 @@
 [![Build Status](https://travis-ci.org/Alexloof/centig.svg?branch=master)](https://travis-ci.org/Alexloof/centig)
 [![codecov](https://codecov.io/gh/Alexloof/centig/branch/master/graph/badge.svg)](https://codecov.io/gh/Alexloof/centig)
 
-> The Configuration Management library for your Node.js application
+> The Configuration Management library for your JavaScript application
 
 ## Introduction
 
-The goal with Centig is to give the developers the opportunity to have all configuration in one single file with a clear hierarchical structure. Centig provides a distinct configuration schema with a simple overview of the context and the origin of each value. Therefore, Centig does not believe in overriding and extending configurations. Each value can be configured very differently, depending on how important or dynamic the value can be. Centig has a validation-first approach (by default) where it should **NOT** be possible to start the application without having all the values ​​present that were defined in the schema.
+The goal with Centig is to give the developer the opportunity to include all configuration in one single file with a logical hierarchical structure. The Centig configuration schema API aims to be very distinct with a simple overview of the context and the origin of each config value. Therefore, Centig does not believe in overriding and extending configurations. Each value can be configured very differently, depending on how important or dynamic the value can be. Centig has a validation-first approach (by default) where it should **NOT** be possible to launch the application without having all the values ​​present that were defined in the schema.
 
 ## Install
 
 ```shell
-npm install convict
+npm install centig
 ```
 
 ## Usage
 
-An example of a config file with some static and some configs coming from environment variables.
+Here is an example of a config file with some static and some configs coming from environment variables.
 
 ```javascript
 const centig = require('centig');
@@ -69,7 +69,7 @@ const config = centig({
 module.exports = config;
 ```
 
-Then you can in any other file import and use the config module as seen below.
+Then we can in any other file import and use the config module as seen below.
 
 ```javascript
 const config = require('./config');
@@ -83,18 +83,18 @@ console.log(`This is the newFeature isSupported: ${isNewFeatureSupported}`);
 
 ## API
 
-#### const config = centig(schema)
+### const config = centig(schema)
 
-The configuration schema passed into the Centig module can be configured very differently depending on the needs. Eather we use the shortcut alternative or we pass a Centig specific configuration object. The following properties can be used.
+The configuration schema passed into the Centig module can be configured very differently depending on the needs. Eather we use the shortcut alternative or we pass a Centig specific configuration object. The following properties can be used:
 
-| Properties | Type             | Required        | Description                                                                                                             |
-| ---------- | ---------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| type       | js constructor   | ✘               | Simple type validation. Supported are: String, Number, Boolean, Array, Object, RegExp.                                  |
-| env        | string           | ✓ (if no value) | This value is grabbed from **process.env**.                                                                             |
-| value      | any              | ✓ (if no env)   | If the config value is not from process.env we can use this property. But maybe the shortcut alternative fits better.   |
-| preprocess | (value) => value | ✘               | A custom function if we wanna process the value. Useful if we wanna perform any conversion before the validation.       |
-| validate   | (value) => void  | ✘               | A custom function if we wanna perform extra validation. Remember to throw Error if the value is not validating.         |
-| optional   | boolean          | ✘               | Defaults to false. We can flip this to true if we don't wanna require a value to be present. No validation will be made |
+| Properties | Type                  | Required        | Description                                                                                                             |
+| ---------- | --------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| type       | constructor           | ✘               | Simple type validation. Supported are: String, Number, Boolean, Array, Object, RegExp.                                  |
+| env        | string                | ✓ (if no value) | This value is grabbed from **process.env**.                                                                             |
+| value      | any                   | ✓ (if no env)   | If the config value is not from process.env we can use this property. But maybe the shortcut alternative fits better.   |
+| preprocess | (value: any) => value | ✘               | A custom function if we wanna process the value. Useful if we wanna perform any conversion before the validation.       |
+| validate   | (value: any) => void  | ✘               | A custom function if we wanna perform extra validation. Remember to throw Error if the value is not validating.         |
+| optional   | boolean               | ✘               | Defaults to false. We can flip this to true if we don't wanna require a value to be present. No validation will be made |
 
 Example:
 
@@ -117,7 +117,7 @@ const config = centig({
 });
 ```
 
-To use the shortcut method we simply define key-value pairs, where the value could be whatever we want, such as a number or string. This may be a good choice if no validation or processing is needed. See example below.
+To use the shortcut method we simply define key-value pairs, where the value could be whatever we want, such as a number or a string. This may be a good choice if no validation or processing is needed. See the example below.
 
 ```javascript
 const centig = require('centig');
@@ -135,7 +135,7 @@ const config = centig({
 });
 ```
 
-#### config.get(key)
+### config.get(key)
 
 Returns the value by key name.
 
@@ -145,7 +145,7 @@ config.get('api').url;
 config.get('api.url');
 ```
 
-#### config.all()
+### config.all()
 
 Returns all configurations
 

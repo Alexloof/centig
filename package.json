@@ -1,7 +1,7 @@
 {
   "name": "centig",
   "version": "1.0.6",
-  "description": "The Configuration Management library for your Node.js application",
+  "description": "The Configuration Management library for your JavaScript application",
   "main": "lib/centig.js",
   "types": "lib/centig.d.ts",
   "scripts": {
@@ -26,12 +26,12 @@
   },
   "keywords": [
     "config",
-    "node",
     "nodejs",
     "configuration",
     "validation",
     "environment variables",
     "javascript",
+    "js",
     "env",
     "simple",
     "custom"
