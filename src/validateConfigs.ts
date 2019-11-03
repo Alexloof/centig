@@ -45,7 +45,15 @@ const validateConfigs = (configs: IUserConfigs) => {
   return errors;
 };
 
-const validateConfigBlock = (name: string, configBlock: IConfigBlock) => {
+const validateConfigBlock = (
+  name: string,
+  configBlock: IConfigBlock,
+  validateTypeFn: (
+    value: any,
+    type: ISupportedTypes,
+    configName: string,
+  ) => void = typeCheckValue,
+) => {
   const { optional, preprocess, validate, type, env, value } = configBlock;
 
   const isAnEnvVarConfigBlock = !!configBlock.hasOwnProperty('env');
@@ -87,7 +95,7 @@ const validateConfigBlock = (name: string, configBlock: IConfigBlock) => {
   }
 
   if (type) {
-    typeCheckValue(processedValue || valueToValidate, type, name);
+    validateTypeFn(processedValue || valueToValidate, type, name);
   }
 };
 
@@ -111,4 +119,4 @@ const typeCheckValue = (
   }
 };
 
-export default validateConfigs;
+export { validateConfigs as default, typeCheckValue, validateConfigBlock };

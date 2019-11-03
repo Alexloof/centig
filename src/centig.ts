@@ -42,7 +42,7 @@ const centig = <T>(userConfigs: IUserConfigs) => {
   const errors = validateConfigs(userConfigs);
 
   if (errors.length) {
-    throwErrorBeautifully(errors);
+    return throwErrorBeautifully(errors);
   }
   const prunedConfig = prune<T>(userConfigs);
 

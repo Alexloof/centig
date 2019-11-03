@@ -57,7 +57,7 @@ const config = centig({
     env: 'LOG_LEVEL',
     validate: value => {
       const logLevels = ['debug', 'trace', 'info', 'warn', 'error', 'fatal'];
-      if (!logLevels.includes(x)) {
+      if (!logLevels.includes(value)) {
         throw Error(
           `The value - ${value} for logLevel must be one of ${logLevels}`,
         );
