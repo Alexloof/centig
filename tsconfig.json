@@ -8,8 +8,7 @@
     "types": ["jest", "node"],
     "sourceMap": true,
     "removeComments": true,
-    "moduleResolution": "node",
-    "importHelpers": true
+    "moduleResolution": "node"
   },
   "include": ["src"],
   "exclude": ["node_modules", "**/__tests__/*"]
