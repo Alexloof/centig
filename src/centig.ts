@@ -70,9 +70,16 @@ const centig = <T>(schema: ISchema) => {
 };
 
 const throwErrorBeautifully = (errors: string[]) => {
-  const output = errors.map((errorMessage: string) => errorMessage).join('\n');
+  const colorWarning = process.stdout.isTTY ? '\x1b[33;1m' : '';
+  const colorReset = process.stdout.isTTY ? '\x1b[0m' : '';
+  const output = errors
+    .map(
+      (errorMessage: string) =>
+        `${colorWarning}✘${colorReset}  ${errorMessage}`,
+    )
+    .join('\n');
 
-  throw Error('\n' + output);
+  throw Error('\n\n' + 'Validation Error \n' + output + '\n');
 };
 
 export default centig;
