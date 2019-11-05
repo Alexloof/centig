@@ -73,5 +73,4 @@ const throwErrorBeautifully = (errors: string[]) => {
   throw Error('\n\n' + 'Validation Error \n' + output + '\n');
 };
 
-module.exports = centig;
 export default centig;
