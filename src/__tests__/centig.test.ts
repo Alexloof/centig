@@ -1,54 +1,12 @@
 import centig from '../centig';
-import validateConfigs from '../validateConfigs';
+import validateSchema from '../validateSchema';
+import mockSchema from '../__fixtures__/mockSchema';
 
-jest.mock('../validateConfigs');
+jest.mock('../validateSchema');
 
-const mockValidate = (validateConfigs as unknown) as jest.Mock<
-  typeof validateConfigs
+const mockValidate = (validateSchema as unknown) as jest.Mock<
+  typeof validateSchema
 >;
-
-const mockSchema = {
-  db: {
-    host: 'localhost',
-    port: 5050,
-    name: 'admin',
-  },
-  api: {
-    url: {
-      type: String,
-      env: 'API_URL',
-      validate: (value: any) => new URL(value),
-    },
-    key: {
-      type: Number,
-      env: 'API_KEY',
-      preprocess: (value: any) => Number(value),
-    },
-  },
-  newFeature: {
-    isSupported: {
-      type: Boolean,
-      env: 'NEW_FEATURE_SUPPORT',
-      preprocess: (value: any) => Boolean(Number(value)),
-    },
-    regex: {
-      type: RegExp,
-      value: /\babc\b/,
-    },
-  },
-  logLevel: {
-    type: String,
-    env: 'LOG_LEVEL',
-    validate: (value: any) => {
-      const logLevels = ['debug', 'trace', 'info', 'warn', 'error', 'fatal'];
-      if (!logLevels.includes(value)) {
-        throw Error(
-          `The value - ${value} for logLevel must be one of ${logLevels}`,
-        );
-      }
-    },
-  },
-};
 
 const mockExpected = {
   db: {

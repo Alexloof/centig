@@ -1,13 +1,13 @@
-import { isObject, isConfigBlock } from './utils';
-import { IUserConfigs, IConfigBlock } from './centig';
+import { isObject, isCentigBlock } from './utils';
+import { ISchema, ICentigBlock } from './centig';
 
-const prune = <T>(configs: IUserConfigs): T => {
-  return Object.keys(configs).reduce(
+const prune = <T>(schema: ISchema): T => {
+  return Object.keys(schema).reduce(
     (accumulator: { [index: string]: any }, configName: string) => {
-      const configBlock = configs[configName];
+      const configBlock = schema[configName];
       if (isObject(configBlock)) {
-        if (isConfigBlock(configBlock)) {
-          const centigConfigBlock = configBlock as IConfigBlock;
+        if (isCentigBlock(configBlock)) {
+          const centigConfigBlock = configBlock as ICentigBlock;
           const value = centigConfigBlock.hasOwnProperty('env')
             ? process.env[centigConfigBlock.env as string]
             : centigConfigBlock.value;
@@ -20,7 +20,7 @@ const prune = <T>(configs: IUserConfigs): T => {
         }
 
         // if the config object is not a centig specific block - continue prune nested configs
-        accumulator[configName] = prune(configBlock as IUserConfigs);
+        accumulator[configName] = prune(configBlock as ISchema);
         return accumulator;
       }
 

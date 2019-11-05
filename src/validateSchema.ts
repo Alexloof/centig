@@ -1,8 +1,8 @@
 import {
-  IConfigBlock,
+  ICentigBlock,
   ISupportedTypes,
   supportedTypes,
-  IUserConfigs,
+  ISchema,
 } from './centig';
 
 import {
@@ -10,11 +10,11 @@ import {
   isFunction,
   isConstructor,
   isConstructorType,
-  isConfigBlock,
-  hasDuplicateConfigValues,
+  isCentigBlock,
+  hasDuplicateCentigBlockValues,
 } from './utils';
 
-const validateConfigs = (configs: IUserConfigs) => {
+const validateSchema = (configs: ISchema) => {
   let errors: string[] = [];
 
   Object.keys(configs).forEach(configName => {
@@ -22,18 +22,18 @@ const validateConfigs = (configs: IUserConfigs) => {
 
     try {
       if (isObject(configBlock)) {
-        if (isConfigBlock(configBlock)) {
-          if (hasDuplicateConfigValues(configBlock as IConfigBlock)) {
+        if (isCentigBlock(configBlock)) {
+          if (hasDuplicateCentigBlockValues(configBlock as ICentigBlock)) {
             throw Error(
               'You can not provide both an env and a value in the config object. Config name: ' +
                 configName,
             );
           }
-          validateConfigBlock(configName, configBlock as IConfigBlock);
+          validateCentigBlock(configName, configBlock as ICentigBlock);
         }
 
         // if the config object is not a centig specific block - continue with nested validation
-        errors = [...errors, ...validateConfigs(configBlock as IUserConfigs)];
+        errors = [...errors, ...validateSchema(configBlock as ISchema)];
       }
 
       // If there is no config block, then there is no need for validation
@@ -45,18 +45,18 @@ const validateConfigs = (configs: IUserConfigs) => {
   return errors;
 };
 
-const validateConfigBlock = (
+const validateCentigBlock = (
   name: string,
-  configBlock: IConfigBlock,
+  centigBlock: ICentigBlock,
   validateTypeFn: (
     value: any,
     type: ISupportedTypes,
     configName: string,
   ) => void = typeCheckValue,
 ) => {
-  const { optional, preprocess, validate, type, env, value } = configBlock;
+  const { optional, preprocess, validate, type, env, value } = centigBlock;
 
-  const isAnEnvVarConfigBlock = !!configBlock.hasOwnProperty('env');
+  const isAnEnvVarConfigBlock = !!centigBlock.hasOwnProperty('env');
 
   const valueToValidate = isAnEnvVarConfigBlock
     ? process.env[env as string]
@@ -111,7 +111,7 @@ const typeCheckValue = (
   const formattedTypeName = new type().constructor.name;
 
   if (!supportedTypes.includes(formattedTypeName)) {
-    throw Error(new type().constructor.name + ' is not a supported type');
+    throw Error(formattedTypeName + ' is not a supported type');
   }
 
   if (!isConstructorType(value, type)) {
@@ -119,4 +119,4 @@ const typeCheckValue = (
   }
 };
 
-export { validateConfigs as default, typeCheckValue, validateConfigBlock };
+export { validateSchema as default, typeCheckValue, validateCentigBlock };

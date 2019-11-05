@@ -12,5 +12,8 @@ module.exports = {
       functions: 80,
     },
   },
-  collectCoverageFrom: ['<rootDir>/src/**/*.{ts,js}'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{ts,js}',
+    '!<rootDir>/src/__fixtures__/**/*.{ts,js}',
+  ],
 };

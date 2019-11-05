@@ -1,7 +1,7 @@
-import validateConfigs from './validateConfigs';
+import validateSchema from './validateSchema';
 import prune from './prune';
 
-export interface IConfigBlock {
+export interface ICentigBlock {
   type?: ISupportedTypes;
   env?: string;
   value?: any;
@@ -25,8 +25,8 @@ export type IValueTypes =
   | { [index: string]: any }
   | (() => void);
 
-export interface IUserConfigs {
-  [index: string]: IConfigBlock | IValueTypes | IUserConfigs;
+export interface ISchema {
+  [index: string]: ICentigBlock | IValueTypes | ISchema;
 }
 
 export const supportedTypes = [
@@ -38,13 +38,13 @@ export const supportedTypes = [
   'RegExp',
 ];
 
-const centig = <T>(userConfigs: IUserConfigs) => {
-  const errors = validateConfigs(userConfigs);
+const centig = <T>(schema: ISchema) => {
+  const errors = validateSchema(schema);
 
   if (errors.length) {
-    return throwErrorBeautifully(errors);
+    throwErrorBeautifully(errors);
   }
-  const prunedConfig = prune<T>(userConfigs);
+  const prunedConfig = prune<T>(schema);
 
   return {
     get<P extends keyof T | string>(path: P): P extends keyof T ? T[P] : any {

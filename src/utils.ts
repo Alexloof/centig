@@ -1,4 +1,4 @@
-import { IValueTypes, ISupportedTypes, IConfigBlock } from './centig';
+import { IValueTypes, ISupportedTypes, ICentigBlock } from './centig';
 
 function isConstructor(f: any) {
   try {
@@ -21,14 +21,14 @@ const isObject = (input: any) => typeof input === 'object';
 
 const isFunction = (input: any) => typeof input === 'function';
 
-const isConfigBlock = (configBlock: any): boolean => {
+const isCentigBlock = (configBlock: any): boolean => {
   return (
     typeof configBlock === 'object' &&
     (configBlock.hasOwnProperty('env') || configBlock.hasOwnProperty('value'))
   );
 };
 
-const hasDuplicateConfigValues = (configBlock: IConfigBlock): boolean => {
+const hasDuplicateCentigBlockValues = (configBlock: ICentigBlock): boolean => {
   return (
     configBlock.hasOwnProperty('env') && configBlock.hasOwnProperty('value')
   );
@@ -39,6 +39,6 @@ export {
   isConstructorType,
   isObject,
   isFunction,
-  isConfigBlock,
-  hasDuplicateConfigValues,
+  isCentigBlock,
+  hasDuplicateCentigBlockValues,
 };
