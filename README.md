@@ -21,7 +21,7 @@ npm install centig
 Here is an example of a config file with some static and some configs coming from environment variables.
 
 ```javascript
-const centig = require('centig');
+const { centig } = require('centig');
 
 const config = centig({
   db: {
@@ -99,7 +99,7 @@ The configuration schema passed into the Centig module can be configured very di
 Example:
 
 ```javascript
-const centig = require('centig');
+const { centig } = require('centig');
 
 const config = centig({
   api: {
@@ -120,7 +120,7 @@ const config = centig({
 To use the shortcut method we simply define key-value pairs, where the value could be whatever we want, such as a number or a string. This may be a good choice if no validation or processing is needed. See the example below.
 
 ```javascript
-const centig = require('centig');
+const { centig } = require('centig');
 
 const config = centig({
   db: {

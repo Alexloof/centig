@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "centig": "^1.0.8"
+    "centig": "^1.0.10"
   }
 }

@@ -1,9 +1,14 @@
-const http = require('http');
-const { centig } = require('centig');
+import * as http from 'http';
+import centig from 'centig';
 
 process.env.NODE_ENV = 'development';
 
-const config = centig({
+interface ISchema {
+  port: number;
+  env: string;
+}
+
+const config = centig<ISchema>({
   port: {
     type: Number,
     value: 8000,
@@ -23,7 +28,7 @@ const port = config.get('port');
 const env = config.get('env');
 
 http
-  .createServer((req, res) => {
+  .createServer((req: any, res: any) => {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('Hello World');
   })
