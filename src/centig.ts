@@ -29,15 +29,6 @@ export interface ISchema {
   [index: string]: ICentigBlock | IValueTypes | ISchema;
 }
 
-export const supportedTypes = [
-  'Number',
-  'String',
-  'Boolean',
-  'Object',
-  'Array',
-  'RegExp',
-];
-
 const centig = <T>(schema: ISchema) => {
   const errors = validateSchema(schema);
 
@@ -82,4 +73,5 @@ const throwErrorBeautifully = (errors: string[]) => {
   throw Error('\n\n' + 'Validation Error \n' + output + '\n');
 };
 
+module.exports = centig;
 export default centig;

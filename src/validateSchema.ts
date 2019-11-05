@@ -1,9 +1,4 @@
-import {
-  ICentigBlock,
-  ISupportedTypes,
-  supportedTypes,
-  ISchema,
-} from './centig';
+import { ICentigBlock, ISupportedTypes, ISchema } from './centig';
 
 import {
   isObject,
@@ -13,6 +8,15 @@ import {
   isCentigBlock,
   hasDuplicateCentigBlockValues,
 } from './utils';
+
+const supportedTypes = [
+  'Number',
+  'String',
+  'Boolean',
+  'Object',
+  'Array',
+  'RegExp',
+];
 
 const validateSchema = (configs: ISchema) => {
   let errors: string[] = [];
