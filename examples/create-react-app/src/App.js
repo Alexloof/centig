@@ -18,18 +18,11 @@ const config = centig({
   },
 });
 
-console.log('process env', process.env);
-
-console.log(config.get('port'));
-console.log(config.get('env'));
-
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+        <p>Running in {config.get('env')}</p>
       </header>
     </div>
   );
