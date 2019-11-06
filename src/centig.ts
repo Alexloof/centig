@@ -61,8 +61,9 @@ const centig = <T>(schema: ISchema) => {
 };
 
 const throwErrorBeautifully = (errors: string[]) => {
-  const colorWarning = process.stdout.isTTY ? '\x1b[33;1m' : '';
-  const colorReset = process.stdout.isTTY ? '\x1b[0m' : '';
+  const isNodeJs = typeof window === 'undefined';
+  const colorWarning = isNodeJs ? '\x1b[33;1m' : '';
+  const colorReset = isNodeJs ? '\x1b[0m' : '';
   const output = errors
     .map(
       (errorMessage: string) =>
