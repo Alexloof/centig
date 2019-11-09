@@ -1,7 +1,7 @@
 # Centig
 
 [![NPM version](https://img.shields.io/npm/v/centig.svg)](https://www.npmjs.org/package/centig)
-[![size](https://bundlephobia.com/result?p=centig@1.0.11)](https://bundlephobia.com/result?p=centig@1.0.11)
+[![size](https://badgen.net/bundlephobia/minzip/centig)](https://badgen.net/bundlephobia/minzip/centig)
 [![Build Status](https://travis-ci.org/Alexloof/centig.svg?branch=master)](https://travis-ci.org/Alexloof/centig)
 [![codecov](https://codecov.io/gh/Alexloof/centig/branch/master/graph/badge.svg)](https://codecov.io/gh/Alexloof/centig)
 
