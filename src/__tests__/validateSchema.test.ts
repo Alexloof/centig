@@ -119,7 +119,7 @@ describe('validateCentigBlock', () => {
         type: Number,
         env: 'DB_PORT',
       }),
-    ).toThrowError('Missing environment variable DB_PORT.');
+    ).toThrowError('Missing environment variable "DB_PORT".');
   });
 
   it('should throw Error preprocess is present but not a function', () => {
