@@ -2684,10 +2684,10 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-centig@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/centig/-/centig-1.0.11.tgz#179762631b5f2832cbf8febdcab4883294be3c18"
-  integrity sha512-CgR6FmjsdVGqva1xKWiBQTMOfzw+PxZBUAD98RcknaLE8ltTNuEm1KgtixTij9wCOlyp6JEsNEAxc16G3BaDXg==
+centig@^1.0.12:
+  version "1.0.12"
+  resolved "https://registry.yarnpkg.com/centig/-/centig-1.0.12.tgz#372f3b772104f10127c87f568d2819d4ca50833c"
+  integrity sha512-iWZtCcRx+nKRJ6TB7oVgQfQE5n1wHKs28djxoqnFwMjoO4wFMgv7GgjSc9JveRiKwTUAgXtZ42TBtNdGsAQY8g==
 
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.4.1, chalk@^2.4.2:
   version "2.4.2"
