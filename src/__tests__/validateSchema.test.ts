@@ -24,7 +24,11 @@ describe('validateSchema', () => {
     };
 
     expect(validateSchema(schema)).toEqual([
-      'You can not provide both an env and a value in the config object. Config name: host',
+      {
+        message:
+          'You can not provide both an env and a value in the config object. Config name: host',
+        path: 'db.host',
+      },
     ]);
   });
 
@@ -38,7 +42,9 @@ describe('validateSchema', () => {
       },
     };
 
-    expect(validateSchema(schema)).toEqual(['host is not of type Number']);
+    expect(validateSchema(schema)).toEqual([
+      { message: 'localhost is not of type Number', path: 'db.host' },
+    ]);
   });
 
   it('should return Error message if schema does not validate the validate function which throw Error', () => {
@@ -56,7 +62,9 @@ describe('validateSchema', () => {
       },
     };
 
-    expect(validateSchema(schema)).toEqual(['must include somethingelse']);
+    expect(validateSchema(schema)).toEqual([
+      { message: 'must include somethingelse', path: 'db.host' },
+    ]);
   });
 });
 
@@ -67,13 +75,13 @@ describe('validateCentigBlock', () => {
 
   it('should throw Error if type validation fails', () => {
     expect(() =>
-      validateCentigBlock('port', { type: Number, value: '3000' }),
-    ).toThrowError('port is not of type Number');
+      validateCentigBlock({ type: Number, value: '3000' }),
+    ).toThrowError('3000 is not of type Number');
   });
 
   it('should throw Error if custom validate function throws', () => {
     expect(() =>
-      validateCentigBlock('port', {
+      validateCentigBlock({
         type: String,
         value: '3000',
         validate: () => {
@@ -85,7 +93,7 @@ describe('validateCentigBlock', () => {
 
   it('should call preprocess if it is present', () => {
     const mockPreprocess = jest.fn();
-    validateCentigBlock('port', {
+    validateCentigBlock({
       type: Number,
       value: 3000,
       preprocess: mockPreprocess,
@@ -96,7 +104,7 @@ describe('validateCentigBlock', () => {
 
   it('should call validate if it is present', () => {
     const mockValidate = jest.fn();
-    validateCentigBlock('port', {
+    validateCentigBlock({
       type: Number,
       value: 3000,
       validate: mockValidate,
@@ -105,43 +113,38 @@ describe('validateCentigBlock', () => {
     expect(mockValidate).toHaveBeenCalled();
   });
 
-  it('should throw Error if env value is present but is an empty string', () => {
-    const mockValidate = jest.fn();
-
+  it('should throw Error if env value is present but env value not exist', () => {
     expect(() =>
-      validateCentigBlock('port', {
+      validateCentigBlock({
         type: Number,
-        env: '',
+        env: 'DB_PORT',
       }),
-    ).toThrowError('Missing environment variable. Config name: port');
+    ).toThrowError('Missing environment variable DB_PORT.');
   });
 
   it('should throw Error preprocess is present but not a function', () => {
     expect(() =>
-      validateCentigBlock('port', {
+      validateCentigBlock({
         type: Number,
         value: 5000,
         preprocess: 123 as any,
       }),
-    ).toThrowError(
-      'The preprocess value most by a function. Config name: port',
-    );
+    ).toThrowError('The value of preprocess most be of type function.');
   });
 
   it('should throw Error validate is present but not a function', () => {
     expect(() =>
-      validateCentigBlock('port', {
+      validateCentigBlock({
         type: Number,
         value: 5000,
         validate: 123 as any,
       }),
-    ).toThrowError('The validate value most by a function. Config name: port');
+    ).toThrowError('The value of validate value most be of type function.');
   });
 
   it('should call typeCheck only if a type is present', () => {
     const mockValidateTypeFn = jest.fn();
     validateCentigBlock(
-      'port',
       {
         type: Number,
         value: 3000,
@@ -149,7 +152,6 @@ describe('validateCentigBlock', () => {
       mockValidateTypeFn,
     );
     validateCentigBlock(
-      'port',
       {
         value: 3000,
       },
@@ -164,7 +166,6 @@ describe('validateCentigBlock', () => {
     const mockValidateTypeFn = jest.fn();
 
     validateCentigBlock(
-      'port',
       {
         type: String,
         value: 3000,
@@ -172,17 +173,13 @@ describe('validateCentigBlock', () => {
       },
       mockValidateTypeFn,
     );
-    expect(mockValidateTypeFn).toHaveBeenCalledWith(
-      'new value',
-      String,
-      'port',
-    );
+    expect(mockValidateTypeFn).toHaveBeenCalledWith('new value', String);
   });
 
   it('should not call preprocess or validation if optional flag is set and value not present', () => {
     const mockValidate = jest.fn();
     const mockPreprocess = jest.fn();
-    validateCentigBlock('port', {
+    validateCentigBlock({
       type: Number,
       env: '',
       validate: mockValidate,
@@ -197,14 +194,14 @@ describe('validateCentigBlock', () => {
 
 describe('typeCheckValue', () => {
   it('should throw Error if passed type is a supported constructor', () => {
-    expect(() =>
-      typeCheckValue('mock-value', 'string' as any, 'mock-name'),
-    ).toThrowError('string is not a valid type');
+    expect(() => typeCheckValue('mock-value', 'string' as any)).toThrowError(
+      'string is not a valid type',
+    );
   });
 
   it('should throw Error if passed type is not supported', () => {
-    expect(() =>
-      typeCheckValue('mock-value', Date as any, 'mock-name'),
-    ).toThrowError('Date is not a supported typ');
+    expect(() => typeCheckValue('mock-value', Date as any)).toThrowError(
+      'Date is not a supported typ',
+    );
   });
 });

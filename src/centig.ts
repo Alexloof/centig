@@ -1,4 +1,4 @@
-import validateSchema from './validateSchema';
+import validateSchema, { IError } from './validateSchema';
 import prune from './prune';
 
 export interface ICentigBlock {
@@ -60,18 +60,18 @@ const centig = <T>(schema: ISchema) => {
   };
 };
 
-const throwErrorBeautifully = (errors: string[]) => {
+const throwErrorBeautifully = (errors: IError[]) => {
   const isNodeJs = typeof window === 'undefined';
   const colorWarning = isNodeJs ? '\x1b[33;1m' : '';
   const colorReset = isNodeJs ? '\x1b[0m' : '';
   const output = errors
     .map(
-      (errorMessage: string) =>
-        `${colorWarning}✘${colorReset}  ${errorMessage}`,
+      ({ message, path }: IError) =>
+        `${colorWarning}✘${colorReset}  ${message} \n\n   At path: ${path}`,
     )
-    .join('\n');
+    .join('\n\n\n');
 
-  throw Error('\n\n' + 'Validation Error \n' + output + '\n');
+  throw Error('\n\n' + 'Centig Error \n\n' + output + '\n');
 };
 
 export default centig;

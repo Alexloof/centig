@@ -18,8 +18,13 @@ const supportedTypes = [
   'RegExp',
 ];
 
+export interface IError {
+  path: string;
+  message: string;
+}
+
 const validateSchema = (configs: ISchema) => {
-  let errors: string[] = [];
+  let errors: IError[] = [];
 
   Object.keys(configs).forEach(configName => {
     const configBlock = configs[configName];
@@ -33,30 +38,38 @@ const validateSchema = (configs: ISchema) => {
                 configName,
             );
           }
-          validateCentigBlock(configName, configBlock as ICentigBlock);
+          validateCentigBlock(configBlock as ICentigBlock);
         }
 
         // if the config object is not a centig specific block - continue with nested validation
-        errors = [...errors, ...validateSchema(configBlock as ISchema)];
+        errors = [
+          ...errors,
+          ...populateWithParentPath(
+            validateSchema(configBlock as ISchema),
+            configName,
+          ),
+        ];
       }
 
       // If there is no config block, then there is no need for validation
       return;
     } catch (error) {
-      errors = [...errors, error.message];
+      errors = [...errors, { path: configName, message: error.message }];
     }
   });
   return errors;
 };
 
+const populateWithParentPath = (errors: IError[], configName: string) => {
+  return errors.map(({ path, message }) => ({
+    message,
+    path: configName + '.' + path,
+  }));
+};
+
 const validateCentigBlock = (
-  name: string,
   centigBlock: ICentigBlock,
-  validateTypeFn: (
-    value: any,
-    type: ISupportedTypes,
-    configName: string,
-  ) => void = typeCheckValue,
+  validateTypeFn: (value: any, type: ISupportedTypes) => void = typeCheckValue,
 ) => {
   const { optional, preprocess, validate, type, env, value } = centigBlock;
 
@@ -72,9 +85,9 @@ const validateCentigBlock = (
       return;
     }
     throw Error(
-      `Missing ${
-        isAnEnvVarConfigBlock ? 'environment' : 'value'
-      } variable. Config name: ${name}`,
+      `Missing ${isAnEnvVarConfigBlock ? 'environment' : 'value'} variable ${
+        isAnEnvVarConfigBlock ? '"' + env + '"' : value
+      }.`,
     );
   }
 
@@ -82,32 +95,24 @@ const validateCentigBlock = (
 
   if (preprocess) {
     if (!isFunction(preprocess)) {
-      throw Error(
-        'The preprocess value most by a function. Config name: ' + name,
-      );
+      throw Error('The value of preprocess most be of type function.');
     }
     processedValue = preprocess(valueToValidate);
   }
 
   if (validate) {
     if (!isFunction(validate)) {
-      throw Error(
-        'The validate value most by a function. Config name: ' + name,
-      );
+      throw Error('The value of validate value most be of type function.');
     }
     validate(valueToValidate);
   }
 
   if (type) {
-    validateTypeFn(processedValue || valueToValidate, type, name);
+    validateTypeFn(processedValue || valueToValidate, type);
   }
 };
 
-const typeCheckValue = (
-  value: any,
-  type: ISupportedTypes,
-  configName: string,
-) => {
+const typeCheckValue = (value: any, type: ISupportedTypes) => {
   if (!isConstructor(type)) {
     throw Error(type + ' is not a valid type');
   }
@@ -119,7 +124,9 @@ const typeCheckValue = (
   }
 
   if (!isConstructorType(value, type)) {
-    throw Error(configName + ' is not of type ' + formattedTypeName);
+    throw Error(
+      (value || 'The value') + ' is not of type ' + formattedTypeName,
+    );
   }
 };
 
