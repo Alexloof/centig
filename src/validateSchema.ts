@@ -75,7 +75,7 @@ const validateCentigBlock = (
 
   const isAnEnvVarConfigBlock = !!centigBlock.hasOwnProperty('env');
 
-  const valueToValidate = isAnEnvVarConfigBlock
+  let valueToValidate = isAnEnvVarConfigBlock
     ? process.env[env as string]
     : value;
 
@@ -91,13 +91,11 @@ const validateCentigBlock = (
     );
   }
 
-  let processedValue = null;
-
   if (preprocess) {
     if (!isFunction(preprocess)) {
       throw Error('The value of preprocess most be of type function.');
     }
-    processedValue = preprocess(valueToValidate);
+    valueToValidate = preprocess(valueToValidate);
   }
 
   if (validate) {
@@ -108,7 +106,7 @@ const validateCentigBlock = (
   }
 
   if (type) {
-    validateTypeFn(processedValue || valueToValidate, type);
+    validateTypeFn(valueToValidate, type);
   }
 };
 

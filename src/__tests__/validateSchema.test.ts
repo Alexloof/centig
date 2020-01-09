@@ -92,7 +92,7 @@ describe('validateCentigBlock', () => {
   });
 
   it('should call preprocess if it is present', () => {
-    const mockPreprocess = jest.fn();
+    const mockPreprocess = jest.fn(value => value);
     validateCentigBlock({
       type: Number,
       value: 3000,
@@ -174,6 +174,23 @@ describe('validateCentigBlock', () => {
       mockValidateTypeFn,
     );
     expect(mockValidateTypeFn).toHaveBeenCalledWith('new value', String);
+  });
+
+  it('should call validate with the preprocessed value', () => {
+    const mockPreprocess = jest.fn(() => 'new value');
+    const mockValidateTypeFn = jest.fn();
+    const mockValidate = jest.fn();
+
+    validateCentigBlock(
+      {
+        type: String,
+        value: 3000,
+        preprocess: mockPreprocess,
+        validate: mockValidate,
+      },
+      mockValidateTypeFn,
+    );
+    expect(mockValidate).toHaveBeenCalledWith('new value');
   });
 
   it('should not call preprocess or validation if optional flag is set and value not present', () => {
