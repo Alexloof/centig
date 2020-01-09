@@ -1,6 +1,6 @@
 {
   "name": "centig",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "The Configuration Management library for your JavaScript application",
   "main": "lib/index.js",
   "types": "lib/centig.d.ts",
