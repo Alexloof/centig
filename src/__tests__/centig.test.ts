@@ -129,5 +129,11 @@ describe('centig', () => {
       );
       expect(config.get('logLevel')).toEqual(mockExpected.logLevel);
     });
+
+    it('should throw if value is undefined with .get()', () => {
+      setEnvironmentMockVars();
+      const config = centig(mockSchema);
+      expect(() => config.get('somethingNotExisting')).toThrowError();
+    });
   });
 });
