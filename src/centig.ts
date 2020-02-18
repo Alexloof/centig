@@ -51,7 +51,15 @@ const centig = <T>(schema: ISchema) => {
 
         config = standardConfig;
       }
-      return config as P extends keyof T ? T[P] : any;
+      const value = config as P extends keyof T ? T[P] : any;
+
+      if (value === undefined) {
+        throw Error(
+          `The config value you tried to get does not exist in the configuration schema \n\n   At path: ${path}`,
+        );
+      }
+
+      return value;
     },
 
     all() {
