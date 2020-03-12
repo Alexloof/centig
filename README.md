@@ -96,6 +96,7 @@ The configuration schema passed into the Centig module can be configured very di
 | preprocess | (value: any) => value | ✘               | A custom function if we wanna process the value. Useful if we wanna perform any conversion before the validation.       |
 | validate   | (value: any) => void  | ✘               | A custom function if we wanna perform extra validation. Remember to throw Error if the value is not validating.         |
 | optional   | boolean               | ✘               | Defaults to false. We can flip this to true if we don't wanna require a value to be present. No validation will be made |
+| defaultValue | any                 | ✘               | A value that will be used if either 'env' or 'value' is empty/undefined |
 
 Example:
 
