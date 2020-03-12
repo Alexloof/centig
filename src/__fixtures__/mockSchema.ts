@@ -30,7 +30,7 @@ export default {
   publicUrl: {
     type: String,
     env: 'PUBLIC_URL_NOT_EXIST',
-    defaultValue: 'https://defaulturl.com'
+    defaultValue: 'https://defaulturl.com',
   },
   logLevel: {
     type: String,

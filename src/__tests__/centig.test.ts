@@ -140,7 +140,7 @@ describe('centig', () => {
     it('should return the defaultValue if provided and env value is undefined', () => {
       setEnvironmentMockVars();
       const config = centig(mockSchema);
-      expect(config.get('publicUrl')).toEqual('https://defaulturl.com')
+      expect(config.get('publicUrl')).toEqual('https://defaulturl.com');
     });
   });
 });

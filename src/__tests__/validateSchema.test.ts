@@ -196,7 +196,7 @@ describe('validateCentigBlock', () => {
   it('should call validate with the defaultValue', () => {
     const mockValidateTypeFn = jest.fn();
     const mockValidate = jest.fn();
-    const defaultValue = 'default-value'
+    const defaultValue = 'default-value';
     validateCentigBlock(
       {
         type: String,
@@ -213,7 +213,7 @@ describe('validateCentigBlock', () => {
     const mockPreprocess = jest.fn(() => 'new value');
     const mockValidateTypeFn = jest.fn();
     const mockValidate = jest.fn();
-    const defaultValue = 'default-value'
+    const defaultValue = 'default-value';
     validateCentigBlock(
       {
         type: String,

@@ -71,7 +71,15 @@ const validateCentigBlock = (
   centigBlock: ICentigBlock,
   validateTypeFn: (value: any, type: ISupportedTypes) => void = typeCheckValue,
 ) => {
-  const { optional, preprocess, validate, type, env, value, defaultValue } = centigBlock;
+  const {
+    optional,
+    preprocess,
+    validate,
+    type,
+    env,
+    value,
+    defaultValue,
+  } = centigBlock;
 
   const isAnEnvVarConfigBlock = !!centigBlock.hasOwnProperty('env');
 
@@ -81,7 +89,7 @@ const validateCentigBlock = (
 
   if (!valueToValidate) {
     if (centigBlock.hasOwnProperty('defaultValue')) {
-      valueToValidate = defaultValue
+      valueToValidate = defaultValue;
     } else {
       if (optional) {
         // if no value is present and at the same time is optional we stop validation process

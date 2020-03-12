@@ -13,7 +13,7 @@ const prune = <T>(schema: ISchema): T => {
             : centigConfigBlock.value;
 
           if (!value && centigConfigBlock.hasOwnProperty('defaultValue')) {
-            value = centigConfigBlock.defaultValue
+            value = centigConfigBlock.defaultValue;
           }
 
           accumulator[configName] = centigConfigBlock.preprocess
