@@ -22,6 +22,7 @@ const mockExpected = {
     isSupported: true,
     regex: /\babc\b/,
   },
+  publicUrl: 'https://defaulturl.com',
   logLevel: 'info',
 };
 
@@ -134,6 +135,12 @@ describe('centig', () => {
       setEnvironmentMockVars();
       const config = centig(mockSchema);
       expect(() => config.get('somethingNotExisting')).toThrowError();
+    });
+
+    it('should return the defaultValue if provided and env value is undefined', () => {
+      setEnvironmentMockVars();
+      const config = centig(mockSchema);
+      expect(config.get('publicUrl')).toEqual('https://defaulturl.com')
     });
   });
 });

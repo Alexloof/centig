@@ -27,6 +27,11 @@ export default {
       value: /\babc\b/,
     },
   },
+  publicUrl: {
+    type: String,
+    env: 'PUBLIC_URL_NOT_EXIST',
+    defaultValue: 'https://defaulturl.com'
+  },
   logLevel: {
     type: String,
     env: 'LOG_LEVEL',

@@ -193,6 +193,40 @@ describe('validateCentigBlock', () => {
     expect(mockValidate).toHaveBeenCalledWith('new value');
   });
 
+  it('should call validate with the defaultValue', () => {
+    const mockValidateTypeFn = jest.fn();
+    const mockValidate = jest.fn();
+    const defaultValue = 'default-value'
+    validateCentigBlock(
+      {
+        type: String,
+        env: 'NOT_EXISTING',
+        validate: mockValidate,
+        defaultValue,
+      },
+      mockValidateTypeFn,
+    );
+    expect(mockValidate).toHaveBeenCalledWith(defaultValue);
+  });
+
+  it('should call preprocess with the defaultValue', () => {
+    const mockPreprocess = jest.fn(() => 'new value');
+    const mockValidateTypeFn = jest.fn();
+    const mockValidate = jest.fn();
+    const defaultValue = 'default-value'
+    validateCentigBlock(
+      {
+        type: String,
+        env: 'NOT_EXISTING',
+        preprocess: mockPreprocess,
+        validate: mockValidate,
+        defaultValue,
+      },
+      mockValidateTypeFn,
+    );
+    expect(mockPreprocess).toHaveBeenCalledWith(defaultValue);
+  });
+
   it('should not call preprocess or validation if optional flag is set and value not present', () => {
     const mockValidate = jest.fn();
     const mockPreprocess = jest.fn();

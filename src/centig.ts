@@ -8,6 +8,7 @@ export interface ICentigBlock {
   validate?: (value: string) => void;
   preprocess?: (value: any) => any;
   optional?: boolean;
+  defaultValue?: any
 }
 
 export type ISupportedTypes =

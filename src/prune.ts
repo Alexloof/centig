@@ -8,9 +8,13 @@ const prune = <T>(schema: ISchema): T => {
       if (isObject(configBlock)) {
         if (isCentigBlock(configBlock)) {
           const centigConfigBlock = configBlock as ICentigBlock;
-          const value = centigConfigBlock.hasOwnProperty('env')
+          let value = centigConfigBlock.hasOwnProperty('env')
             ? process.env[centigConfigBlock.env as string]
             : centigConfigBlock.value;
+
+          if (!value && centigConfigBlock.hasOwnProperty('defaultValue')) {
+            value = centigConfigBlock.defaultValue
+          }
 
           accumulator[configName] = centigConfigBlock.preprocess
             ? centigConfigBlock.preprocess(value)
