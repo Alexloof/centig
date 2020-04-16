@@ -59,8 +59,8 @@ describe('centig', () => {
       },
     };
     const config = centig(schema);
-    config.get('custom').name = 'new-name'
-    expect(config.get('custom').name).toBe('test-validate')
+    config.get('custom').name = 'new-name';
+    expect(config.get('custom').name).toBe('test-validate');
   });
 
   it('should throw Error if validation fails', () => {

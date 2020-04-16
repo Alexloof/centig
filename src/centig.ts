@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash.clonedeep'
+import cloneDeep from 'lodash.clonedeep';
 import validateSchema, { IError } from './validateSchema';
 import prune from './prune';
 
