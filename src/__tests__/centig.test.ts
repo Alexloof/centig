@@ -52,6 +52,17 @@ describe('centig', () => {
     expect(config).toHaveProperty('all');
   });
 
+  it('should give back an immutable config object', () => {
+    const schema = {
+      custom: {
+        name: 'test-validate',
+      },
+    };
+    const config = centig(schema);
+    config.get('custom').name = 'new-name'
+    expect(config.get('custom').name).toBe('test-validate')
+  });
+
   it('should throw Error if validation fails', () => {
     mockValidate.mockReturnValueOnce(['error message'] as any);
     expect(() => centig({})).toThrowError();

@@ -44,9 +44,11 @@
   "homepage": "https://github.com/Alexloof/centig#readme",
   "devDependencies": {
     "@types/jest": "^24.0.20",
+    "@types/lodash.clonedeep": "^4.5.6",
     "@types/node": "^12.11.7",
     "codecov": "^3.6.1",
     "jest": "^24.9.0",
+    "lodash.clonedeep": "^4.5.0",
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",

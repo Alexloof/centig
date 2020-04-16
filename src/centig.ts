@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash.clonedeep'
 import validateSchema, { IError } from './validateSchema';
 import prune from './prune';
 
@@ -60,11 +61,11 @@ const centig = <T>(schema: ISchema) => {
         );
       }
 
-      return value;
+      return cloneDeep(value);
     },
 
     all() {
-      return prunedConfig;
+      return cloneDeep(prunedConfig);
     },
   };
 };
