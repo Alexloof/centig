@@ -48,7 +48,6 @@
     "@types/node": "^12.11.7",
     "codecov": "^3.6.1",
     "jest": "^24.9.0",
-    "lodash.clonedeep": "^4.5.0",
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2",
     "ts-jest": "^24.1.0",
@@ -56,6 +55,9 @@
     "tslint": "^5.20.0",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0"
   },
   "files": [
     "lib/**/*"
